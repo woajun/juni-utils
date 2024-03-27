@@ -22,6 +22,6 @@ export const generateNumberRangeStringArray = (
 
 export const to00 = (num: number) => num.toString().padStart(2, '0');
 
-export const formatCurrency = (number: number): string => {
+export const formatCurrency = (number: number | string): string => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
