@@ -2,7 +2,7 @@
   "name": "juni-utils",
   "version": "1.0.0",
   "main": "src/index",
-  "types": "src/index.d.ts",
+  "types": "src/index",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^5.0.4"
