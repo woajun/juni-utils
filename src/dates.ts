@@ -3,7 +3,7 @@ const isYYYYMMDD = (dateString: string) => {
   return dateFormatRegex.test(dateString);
 };
 
-export const parseDate = (dateString: string) => {
+const parseDate = (dateString: string) => {
   if (isYYYYMMDD(dateString)) {
     const parts = dateString.split('-');
     return new Date(+parts[0], +parts[1] - 1, +parts[2]);
