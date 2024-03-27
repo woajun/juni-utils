@@ -103,3 +103,13 @@ export const adjustDate = (target: Date | string, amount: number): Date => {
   date.setDate(date.getDate() + amount);
   return date;
 };
+
+export const isToday = (target: Date | string): boolean => {
+  const targetDate = ensureDate(target);
+  const today = new Date();
+  return (
+    today.getFullYear() === targetDate.getFullYear() &&
+    today.getMonth() === targetDate.getMonth() &&
+    today.getDate() === targetDate.getDate()
+  )
+}
