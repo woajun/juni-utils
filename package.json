@@ -1,7 +1,7 @@
 {
   "name": "juni-utils",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "src/index",
   "types": "src/cindex.d.ts",
   "license": "MIT",
   "scripts": {
