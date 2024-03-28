@@ -1,6 +1,6 @@
 {
   "name": "juni-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "src/index",
   "types": "src/index",
   "license": "MIT",
