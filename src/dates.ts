@@ -1,3 +1,5 @@
+import { to00 } from "./decimals";
+
 const isYYYYMMDD = (dateString: string) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
   return dateFormatRegex.test(dateString);
@@ -118,4 +120,23 @@ export const isToday = (target: Date | string): boolean => {
     today.getMonth() === targetDate.getMonth() &&
     today.getDate() === targetDate.getDate()
   )
+}
+
+export const getAllDatesOfMonth = (target: Date | string) => {
+  const date = ensureDate(target);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const dates = [];
+
+  for (let i = 1; i <= daysInMonth; i++) {
+    const formattedDate = `${year}-${to00(month)}-${to00(i)}`;
+    dates.push(formattedDate);
+  }
+
+  return dates;
+}
+
+export const getLengthOfMonth = (target: Date | string) => {
+  return getAllDatesOfMonth(target).length;
 }
