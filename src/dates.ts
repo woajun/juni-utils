@@ -25,6 +25,7 @@ type DateFormat =
   | 'MM월DD일'
   | 'MM/DD'
   | 'M. D (AAA)'
+  | 'M. D AAA'
   | 'M. D AAA요일'
   | 'M.D'
   | 'MM.DD'
@@ -72,6 +73,8 @@ export const formatDate = (
       return `${mm}/${dd}`;
     case 'M. D (AAA)':
       return `${m}. ${d} (${aaa})`;
+    case 'M. D AAA':
+      return `${m}. ${d} ${aaa}`;
     case 'M. D AAA요일':
       return `${m}. ${d} ${aaa}요일`;
     case 'M.D':
