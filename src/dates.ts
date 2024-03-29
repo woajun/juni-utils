@@ -24,6 +24,7 @@ export const ensureDate = (target: Date | string): Date => {
 type DateFormat =
   | 'D'
   | 'M월D일'
+  | 'M월 D일'
   | 'MM월DD일'
   | 'MM/DD'
   | 'M. D (AAA)'
@@ -34,6 +35,7 @@ type DateFormat =
   | 'HH:MM'
   | 'YY.MM.DD'
   | 'YYYY-M-D'
+  | 'YYYY년 M월 D일'
   | 'YYYY-MM-DD'
   | 'YYYY. M. D (AAA)'
   | 'MM/DD HH:MM'
@@ -69,6 +71,8 @@ export const formatDate = (
       return d;
     case 'M월D일':
       return `${m}월${d}일`;
+    case 'M월D일':
+      return `${m}월 ${d}일`;
     case 'MM월DD일':
       return `${mm}월${dd}일`;
     case 'MM/DD':
@@ -87,6 +91,8 @@ export const formatDate = (
       return `${hh}:${minutes}`;
     case 'YYYY-M-D':
       return `${yyyy}-${m}-${d}`;
+    case 'YYYY-MM-DD':
+      return `${yyyy}년 ${mm}월 ${dd}일`;
     case 'YYYY-MM-DD':
       return `${yyyy}-${mm}-${dd}`;
     case 'YYYY. M. D (AAA)':
