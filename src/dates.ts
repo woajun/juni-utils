@@ -95,7 +95,7 @@ export const formatDate = (
       return `${yyyy}-${m}-${d}`;
     case 'YYYY년 M월 D일':
       return `${yyyy}년 ${m}월 ${d}일`;
-    case 'YYYY-MM-DD':
+    case 'YYYY-MM':
       return `${yyyy}-${mm}`;
     case 'YYYY-MM-DD':
       return `${yyyy}-${mm}-${dd}`;
