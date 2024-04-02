@@ -36,6 +36,7 @@ type DateFormat =
   | 'YY.MM.DD'
   | 'YYYY-M-D'
   | 'YYYY년 M월 D일'
+  | 'YYYY-MM'
   | 'YYYY-MM-DD'
   | 'YYYY년 MM월 DD일'
   | 'YYYY. M. D (AAA)'
@@ -94,6 +95,8 @@ export const formatDate = (
       return `${yyyy}-${m}-${d}`;
     case 'YYYY년 M월 D일':
       return `${yyyy}년 ${m}월 ${d}일`;
+    case 'YYYY-MM-DD':
+      return `${yyyy}-${mm}`;
     case 'YYYY-MM-DD':
       return `${yyyy}-${mm}-${dd}`;
     case 'YYYY년 MM월 DD일':
