@@ -21,7 +21,7 @@ export const ensureDate = (target: Date | string): Date => {
   return new Date(date);
 };
 
-type DateFormat =
+export type DateFormat =
   | 'D'
   | 'M월D일'
   | 'M월 D일'
@@ -34,6 +34,8 @@ type DateFormat =
   | 'MM.DD'
   | 'HH:MM'
   | 'YY.MM.DD'
+  | 'YYYY'
+  | 'YYYY-WEEK'
   | 'YYYY-M-D'
   | 'YYYY년 M월 D일'
   | 'YYYY-MM'
@@ -91,6 +93,14 @@ export const formatDate = (
       return `${mm}.${dd}`;
     case 'HH:MM':
       return `${hh}:${minutes}`;
+    case 'YYYY':
+      return `${yyyy}`;
+    case 'YYYY-WEEK':
+      const startOfYear = new Date(+yyyy, 0, 0);
+      const diff = date.getTime() - startOfYear.getTime();
+      const oneWeek = 1000 * 60 * 60 * 24 * 7;
+      const weekNumber = Math.floor(diff / oneWeek);
+      return `${yyyy}-${weekNumber}`;
     case 'YYYY-M-D':
       return `${yyyy}-${m}-${d}`;
     case 'YYYY년 M월 D일':
@@ -151,4 +161,43 @@ export const getAllDatesOfMonth = (target: Date | string) => {
 
 export const getLengthOfMonth = (target: Date | string) => {
   return getAllDatesOfMonth(target).length;
+}
+
+export const getDates = (from: Date, to: Date, step: 'day' | 'week' | 'month' | 'year' = 'day'): Date[] => {
+  const dates: Date[] = [];
+
+  let currentDate = new Date(from);
+  const endDate = new Date(to);
+
+  while (currentDate <= endDate) {
+    switch (step) {
+      case 'day':
+        dates.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+        break;
+      case 'week':
+        const firstDayOfWeek = new Date(currentDate);
+        firstDayOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+        dates.push(firstDayOfWeek);
+        currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
+        break;
+      case 'month':
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        dates.push(firstDayOfMonth);
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        currentDate.setDate(1);
+        break;
+      case 'year':
+        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+        dates.push(firstDayOfYear);
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+        currentDate.setMonth(0);
+        currentDate.setDate(1);
+        break;
+      default:
+        throw new Error('Invalid step value. It should be one of "day", "week", "month", or "year".');
+    }
+  }
+
+  return dates;
 }
