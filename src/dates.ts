@@ -23,6 +23,8 @@ export const ensureDate = (target: Date | string): Date => {
 
 export type DateFormat =
   | 'D'
+  | 'M'
+  | 'M월'
   | 'M월D일'
   | 'M월 D일'
   | 'MM월DD일'
@@ -33,14 +35,19 @@ export type DateFormat =
   | 'M.D'
   | 'MM.DD'
   | 'HH:MM'
+  | 'WEEK'
   | 'YY.MM.DD'
   | 'YYYY'
+  | 'YYYY/M'
   | 'YYYY-WEEK'
   | 'YYYY-M-D'
   | 'YYYY년 M월 D일'
+  | 'YYYY년M월'
+  | 'YYYY-M'
   | 'YYYY-MM'
   | 'YYYY-MM-DD'
   | 'YYYY년 MM월 DD일'
+  | 'YYYY.M.D'
   | 'YYYY. M. D (AAA)'
   | 'MM/DD HH:MM'
   | 'MM월DD일 HH:MM'
@@ -73,6 +80,10 @@ export const formatDate = (
   switch (format) {
     case 'D':
       return d;
+    case 'M':
+      return m;
+    case 'M월':
+      return `${m}월`;
     case 'M월D일':
       return `${m}월${d}일`;
     case 'M월 D일':
@@ -93,8 +104,16 @@ export const formatDate = (
       return `${mm}.${dd}`;
     case 'HH:MM':
       return `${hh}:${minutes}`;
+    case 'WEEK':
+      const astartOfYear = new Date(+yyyy, 0, 0);
+      const adiff = date.getTime() - astartOfYear.getTime();
+      const aoneWeek = 1000 * 60 * 60 * 24 * 7;
+      const aweekNumber = Math.floor(adiff / aoneWeek);
+      return `${aweekNumber}`;
     case 'YYYY':
       return `${yyyy}`;
+    case 'YYYY/M':
+      return `${yyyy}/${m}`;
     case 'YYYY-WEEK':
       const startOfYear = new Date(+yyyy, 0, 0);
       const diff = date.getTime() - startOfYear.getTime();
@@ -103,14 +122,20 @@ export const formatDate = (
       return `${yyyy}-${weekNumber}`;
     case 'YYYY-M-D':
       return `${yyyy}-${m}-${d}`;
+    case 'YYYY년M월':
+      return `${yyyy}년${m}월`;
     case 'YYYY년 M월 D일':
       return `${yyyy}년 ${m}월 ${d}일`;
+    case 'YYYY-M':
+      return `${yyyy}-${m}`;
     case 'YYYY-MM':
       return `${yyyy}-${mm}`;
     case 'YYYY-MM-DD':
       return `${yyyy}-${mm}-${dd}`;
     case 'YYYY년 MM월 DD일':
       return `${yyyy}년 ${mm}월 ${dd}일`;
+    case 'YYYY.M.D':
+      return `${yyyy}.${m}.${d}`;
     case 'YYYY. M. D (AAA)':
       return `${yyyy}. ${m}. ${d} (${aaa})`;
     case 'MM/DD HH:MM':
