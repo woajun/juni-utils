@@ -1,4 +1,4 @@
-import { to00 } from "./decimals";
+import { to00 } from './decimals';
 
 const isYYYYMMDD = (dateString: string) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
@@ -56,7 +56,7 @@ export type DateFormat =
 
 export const formatDate = (
   target: Date | string,
-  format: DateFormat = 'YY.MM.DD',
+  format: DateFormat = 'YY.MM.DD'
 ) => {
   const date = ensureDate(target);
 
@@ -78,76 +78,107 @@ export const formatDate = (
   h = h === 0 ? 12 : h;
 
   switch (format) {
-    case 'D':
+    case 'D': {
       return d;
-    case 'M':
+    }
+    case 'M': {
       return m;
-    case 'M월':
+    }
+    case 'M월': {
       return `${m}월`;
-    case 'M월D일':
+    }
+    case 'M월D일': {
       return `${m}월${d}일`;
-    case 'M월 D일':
+    }
+    case 'M월 D일': {
       return `${m}월 ${d}일`;
-    case 'MM월DD일':
+    }
+    case 'MM월DD일': {
       return `${mm}월${dd}일`;
-    case 'MM/DD':
+    }
+    case 'MM/DD': {
       return `${mm}/${dd}`;
-    case 'M. D (AAA)':
+    }
+    case 'M. D (AAA)': {
       return `${m}. ${d} (${aaa})`;
-    case 'M. D AAA':
+    }
+    case 'M. D AAA': {
       return `${m}. ${d} ${aaa}`;
-    case 'M. D AAA요일':
+    }
+    case 'M. D AAA요일': {
       return `${m}. ${d} ${aaa}요일`;
-    case 'M.D':
+    }
+    case 'M.D': {
       return `${m}.${d}`;
-    case 'MM.DD':
+    }
+    case 'MM.DD': {
       return `${mm}.${dd}`;
-    case 'HH:MM':
+    }
+    case 'HH:MM': {
       return `${hh}:${minutes}`;
-    case 'WEEK':
-      const astartOfYear = new Date(+yyyy, 0, 0);
-      const adiff = date.getTime() - astartOfYear.getTime();
-      const aoneWeek = 1000 * 60 * 60 * 24 * 7;
-      const aweekNumber = Math.floor(adiff / aoneWeek);
-      return `${aweekNumber}`;
-    case 'YYYY':
+    }
+    case 'WEEK': {
+      const startOfYear = new Date(+yyyy, 0, 0);
+      const diff = date.getTime() - startOfYear.getTime();
+      const oneWeek = 1000 * 60 * 60 * 24 * 7;
+      const weekNumber = Math.floor(diff / oneWeek);
+      return `${weekNumber}`;
+    }
+    case 'YYYY': {
       return `${yyyy}`;
-    case 'YYYY/M':
+    }
+    case 'YYYY/M': {
       return `${yyyy}/${m}`;
-    case 'YYYY-WEEK':
+    }
+    case 'YYYY-WEEK': {
       const startOfYear = new Date(+yyyy, 0, 0);
       const diff = date.getTime() - startOfYear.getTime();
       const oneWeek = 1000 * 60 * 60 * 24 * 7;
       const weekNumber = Math.floor(diff / oneWeek);
       return `${yyyy}-${weekNumber}`;
-    case 'YYYY-M-D':
+    }
+    case 'YYYY-M-D': {
       return `${yyyy}-${m}-${d}`;
-    case 'YYYY년M월':
+    }
+    case 'YYYY년M월': {
       return `${yyyy}년${m}월`;
-    case 'YYYY년 M월 D일':
+    }
+    case 'YYYY년 M월 D일': {
       return `${yyyy}년 ${m}월 ${d}일`;
-    case 'YYYY-M':
+    }
+    case 'YYYY-M': {
       return `${yyyy}-${m}`;
-    case 'YYYY-MM':
+    }
+    case 'YYYY-MM': {
       return `${yyyy}-${mm}`;
-    case 'YYYY-MM-DD':
+    }
+    case 'YYYY-MM-DD': {
       return `${yyyy}-${mm}-${dd}`;
-    case 'YYYY년 MM월 DD일':
+    }
+    case 'YYYY년 MM월 DD일': {
       return `${yyyy}년 ${mm}월 ${dd}일`;
-    case 'YYYY.M.D':
+    }
+    case 'YYYY.M.D': {
       return `${yyyy}.${m}.${d}`;
-    case 'YYYY. M. D (AAA)':
+    }
+    case 'YYYY. M. D (AAA)': {
       return `${yyyy}. ${m}. ${d} (${aaa})`;
-    case 'MM/DD HH:MM':
+    }
+    case 'MM/DD HH:MM': {
       return `${mm}/${dd} ${hh}:${minutes}`;
-    case 'YY.MM.DD':
+    }
+    case 'YY.MM.DD': {
       return `${yy}.${mm}.${dd}`;
-    case 'MM월DD일 HH:MM':
+    }
+    case 'MM월DD일 HH:MM': {
       return `${mm}월${dd}일 ${hh}:${minutes}`;
-    case '오전오후 H:MM':
+    }
+    case '오전오후 H:MM': {
       return `${amOrPm} ${h}:${minutes}`;
-    case '오전오후 H:MM:s초':
+    }
+    case '오전오후 H:MM:s초': {
       return `${amOrPm} ${h}:${minutes}:${s}초`;
+    }
     default:
       return `${yy}.${mm}.${dd}`;
   }
@@ -166,8 +197,8 @@ export const isToday = (target: Date | string): boolean => {
     today.getFullYear() === targetDate.getFullYear() &&
     today.getMonth() === targetDate.getMonth() &&
     today.getDate() === targetDate.getDate()
-  )
-}
+  );
+};
 
 export const getAllDatesOfMonth = (target: Date | string) => {
   const date = ensureDate(target);
@@ -182,13 +213,17 @@ export const getAllDatesOfMonth = (target: Date | string) => {
   }
 
   return dates;
-}
+};
 
 export const getLengthOfMonth = (target: Date | string) => {
   return getAllDatesOfMonth(target).length;
-}
+};
 
-export const getDates = (from: Date, to: Date, step: 'day' | 'week' | 'month' | 'year' = 'day'): Date[] => {
+export const getDates = (
+  from: Date,
+  to: Date,
+  step: 'day' | 'week' | 'month' | 'year' = 'day'
+): Date[] => {
   const dates: Date[] = [];
 
   let currentDate = new Date(from);
@@ -207,7 +242,11 @@ export const getDates = (from: Date, to: Date, step: 'day' | 'week' | 'month' | 
         currentDate.setDate(currentDate.getDate() + (7 - currentDate.getDay()));
         break;
       case 'month':
-        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const firstDayOfMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          1
+        );
         dates.push(firstDayOfMonth);
         currentDate.setMonth(currentDate.getMonth() + 1);
         currentDate.setDate(1);
@@ -220,9 +259,11 @@ export const getDates = (from: Date, to: Date, step: 'day' | 'week' | 'month' | 
         currentDate.setDate(1);
         break;
       default:
-        throw new Error('Invalid step value. It should be one of "day", "week", "month", or "year".');
+        throw new Error(
+          'Invalid step value. It should be one of "day", "week", "month", or "year".'
+        );
     }
   }
 
   return dates;
-}
+};
