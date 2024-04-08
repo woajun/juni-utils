@@ -36,6 +36,7 @@ export type DateFormat =
   | 'MM.DD'
   | 'hh:mm'
   | 'YY.MM.DD'
+  | 'YY년M월'
   | 'YYYY'
   | 'YYYY/M'
   | 'YYYY-M-D'
@@ -144,6 +145,12 @@ export const formatDate = (
     case 'hh:mm': {
       return `${hh}:${minutes}`;
     }
+    case 'YY.MM.DD': {
+      return `${yy}.${mm}.${dd}`;
+    }
+    case 'YY년M월': {
+      return `${yy}년${m}월`;
+    }
     case 'YYYY': {
       return `${yyyy}`;
     }
@@ -183,9 +190,6 @@ export const formatDate = (
     }
     case 'MM/DD hh:mm': {
       return `${mm}/${dd} ${hh}:${minutes}`;
-    }
-    case 'YY.MM.DD': {
-      return `${yy}.${mm}.${dd}`;
     }
     case 'MM월DD일 hh:mm': {
       return `${mm}월${dd}일 ${hh}:${minutes}`;
