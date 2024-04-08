@@ -34,26 +34,57 @@ export type DateFormat =
   | 'M. D AAA요일'
   | 'M.D'
   | 'MM.DD'
-  | 'HH:MM'
-  | 'WEEK'
+  | 'hh:mm'
   | 'YY.MM.DD'
   | 'YYYY'
   | 'YYYY/M'
-  | 'YYYY-WEEK'
   | 'YYYY-M-D'
   | 'YYYY년 M월 D일'
   | 'YYYY년M월'
   | 'YYYY-M'
+  | 'YYYY-M-W'
   | 'YYYY-MM'
   | 'YYYY-MM-DD'
   | 'YYYY년 MM월 DD일'
   | 'YYYY.M.D'
   | 'YYYY. M. D (AAA)'
-  | 'MM/DD HH:MM'
-  | 'MM월DD일 HH:MM'
-  | '오전오후 H:MM'
-  | '오전오후 H:MM:s초';
+  | 'MM/DD hh:mm'
+  | 'MM월DD일 hh:mm'
+  | '오전오후 h:mm'
+  | '오전오후 h:mm:ss초';
 
+  /**
+   * D 일
+   * 
+   * DD 두자릿 수 일
+   * 
+   * M 월
+   * 
+   * MM 두자릿 수 월
+   * 
+   * YYYY 연
+   * 
+   * YY 두자릿 수 연
+   * 
+   * W 그 달 몇번째 주
+   * 
+   * AAA 요일
+   * 
+   * h 시간
+   * 
+   * hh 두자릿 수 시간
+   * 
+   * m 분
+   * 
+   * mm 두자릿 수 분
+   * 
+   * s 초
+   * 
+   * ss 두자릿 수 초
+   * 
+   * 오전오후
+   * 
+   */
 export const formatDate = (
   target: Date | string,
   format: DateFormat = 'YY.MM.DD'
@@ -66,16 +97,12 @@ export const formatDate = (
   const mm = m.padStart(2, '0');
   const d = date.getDate().toString();
   const dd = d.padStart(2, '0');
-  const hh = date.getHours().toString().padStart(2, '0');
+  const h = date.getHours();
+  const hh = h.toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
-  const s = date.getSeconds().toPrecision().padStart(2, '0');
-
+  const s = date.getSeconds();
+  const ss = s.toPrecision().padStart(2, '0');
   const aaa = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
-
-  let h = date.getHours();
-  const amOrPm = h < 12 ? '오전' : '오후';
-  h = h % 12;
-  h = h === 0 ? 12 : h;
 
   switch (format) {
     case 'D': {
@@ -114,28 +141,14 @@ export const formatDate = (
     case 'MM.DD': {
       return `${mm}.${dd}`;
     }
-    case 'HH:MM': {
+    case 'hh:mm': {
       return `${hh}:${minutes}`;
-    }
-    case 'WEEK': {
-      const startOfYear = new Date(+yyyy, 0, 0);
-      const diff = date.getTime() - startOfYear.getTime();
-      const oneWeek = 1000 * 60 * 60 * 24 * 7;
-      const weekNumber = Math.floor(diff / oneWeek);
-      return `${weekNumber}`;
     }
     case 'YYYY': {
       return `${yyyy}`;
     }
     case 'YYYY/M': {
       return `${yyyy}/${m}`;
-    }
-    case 'YYYY-WEEK': {
-      const startOfYear = new Date(+yyyy, 0, 0);
-      const diff = date.getTime() - startOfYear.getTime();
-      const oneWeek = 1000 * 60 * 60 * 24 * 7;
-      const weekNumber = Math.floor(diff / oneWeek);
-      return `${yyyy}-${weekNumber}`;
     }
     case 'YYYY-M-D': {
       return `${yyyy}-${m}-${d}`;
@@ -148,6 +161,10 @@ export const formatDate = (
     }
     case 'YYYY-M': {
       return `${yyyy}-${m}`;
+    }
+    case 'YYYY-M-W': {
+      const w = Math.ceil((date.getDate() + 6 - date.getDay()) / 7);
+      return `${yyyy}-${m}-${w}`;
     }
     case 'YYYY-MM': {
       return `${yyyy}-${mm}`;
@@ -164,23 +181,27 @@ export const formatDate = (
     case 'YYYY. M. D (AAA)': {
       return `${yyyy}. ${m}. ${d} (${aaa})`;
     }
-    case 'MM/DD HH:MM': {
+    case 'MM/DD hh:mm': {
       return `${mm}/${dd} ${hh}:${minutes}`;
     }
     case 'YY.MM.DD': {
       return `${yy}.${mm}.${dd}`;
     }
-    case 'MM월DD일 HH:MM': {
+    case 'MM월DD일 hh:mm': {
       return `${mm}월${dd}일 ${hh}:${minutes}`;
     }
-    case '오전오후 H:MM': {
-      return `${amOrPm} ${h}:${minutes}`;
+    case '오전오후 h:mm': {
+      const amOrPm = h < 12 ? '오전' : '오후';
+      const displayHours = h % 12 === 0 ? 12 : h % 12;
+      return `${amOrPm} ${displayHours}:${minutes}`;
     }
-    case '오전오후 H:MM:s초': {
-      return `${amOrPm} ${h}:${minutes}:${s}초`;
+    case '오전오후 h:mm:ss초': {
+      const amOrPm = h < 12 ? '오전' : '오후';
+      const displayHours = h % 12 === 0 ? 12 : h % 12;
+      return `${amOrPm} ${displayHours}:${minutes}:${ss}초`;
     }
     default:
-      return `${yy}.${mm}.${dd}`;
+      return `${yyyy}-${mm}-${dd}`;
   }
 };
 
