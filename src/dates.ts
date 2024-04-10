@@ -21,6 +21,36 @@ export const ensureDate = (target: Date | string): Date => {
   return new Date(date);
 };
 
+const shortMonths = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
+const months = [ 
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+
 export type DateFormat =
   | 'D'
   | 'M'
@@ -40,6 +70,7 @@ export type DateFormat =
   | 'YY.MM.DD'
   | 'YY-M'
   | 'YY년M월'
+  | 'YYMMM'
   | 'YYYY'
   | 'YYYY/M'
   | 'YYYY-M-D'
@@ -103,6 +134,8 @@ export const formatDate = (
   const yy = yyyy.slice(-2);
   const m = (date.getMonth() + 1).toString();
   const mm = m.padStart(2, '0');
+  const mmm = shortMonths[date.getMonth()]
+  const mmmm = months[date.getMonth()]
   const d = date.getDate().toString();
   const dd = d.padStart(2, '0');
   const h = date.getHours();
@@ -120,36 +153,10 @@ export const formatDate = (
       return m;
     }
     case 'MMM': {
-      return [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-      ][+m - 1];
+      return mmm;
     }
     case 'MMMM': {
-      return [ 
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ][+m - 1];
+      return mmmm;
     }
     case 'M월': {
       return `${m}월`;
@@ -192,6 +199,9 @@ export const formatDate = (
     }
     case 'YY년M월': {
       return `${yy}년${m}월`;
+    }
+    case 'YYMMM': {
+      return `${yy}${mmm}`;
     }
     case 'YYYY': {
       return `${yyyy}`;
