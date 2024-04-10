@@ -24,6 +24,8 @@ export const ensureDate = (target: Date | string): Date => {
 export type DateFormat =
   | 'D'
   | 'M'
+  | 'MMM'
+  | 'MMMM'
   | 'M월'
   | 'M월D일'
   | 'M월 D일'
@@ -63,6 +65,10 @@ export type DateFormat =
    * M 월
    * 
    * MM 두자릿 수 월
+   * 
+   * MMM 영어 간략 월
+   * 
+   * MMMM 영어 월
    * 
    * YYYY 연
    * 
@@ -112,6 +118,38 @@ export const formatDate = (
     }
     case 'M': {
       return m;
+    }
+    case 'MMM': {
+      return [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+      ][+m - 1];
+    }
+    case 'MMMM': {
+      return [ 
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ][+m - 1];
     }
     case 'M월': {
       return `${m}월`;
