@@ -72,6 +72,7 @@ export type DateFormat =
   | 'YY년M월'
   | 'YYMMM'
   | 'YYYY'
+  | 'YYYY-W'
   | 'YYYY/M'
   | 'YYYY-M-D'
   | 'YYYY년 M월 D일'
@@ -105,7 +106,7 @@ export type DateFormat =
    * 
    * YY 두자릿 수 연
    * 
-   * W 그 달 몇번째 주
+   * W 그 달 몇번째 주 | 그 해 몇번째 주
    * 
    * AAA 요일
    * 
@@ -205,6 +206,13 @@ export const formatDate = (
     }
     case 'YYYY': {
       return `${yyyy}`;
+    }
+    case 'YYYY-W': {
+      const startOfYear = new Date(+yyyy, 0, 0);
+      const diff = date.getTime() - startOfYear.getTime();
+      const oneWeek = 1000 * 60 * 60 * 24 * 7;
+      const weekNumber = Math.floor(diff / oneWeek);
+      return `${yyyy}-${weekNumber}`;
     }
     case 'YYYY/M': {
       return `${yyyy}/${m}`;
